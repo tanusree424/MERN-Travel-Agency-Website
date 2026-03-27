@@ -1,0 +1,47 @@
+import express from "express"
+import cookieParser from "cookie-parser"
+import dotenv from "dotenv";
+import authRoute from "./Routes/AuthRoute.js";
+import cors from "cors";
+import connectToDatabase from "./Config/DatabaseConnection.js";
+import userRoutes from "./Routes/userRoutes.js";
+import packageRouter from "./Routes/packageRoutes.js";
+import bookingRoutes from "./Routes/BookingsRoute.js";
+import contactRoute from "./Routes/ContactRoutes.js";
+dotenv.config()
+
+const  app = express();
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors({
+    origin:"http://localhost:5173",
+    credentials:true
+}))
+app.use(express.urlencoded({extended:true}));
+
+
+app.use("/auth", authRoute);
+app.use("/user", userRoutes);
+app.use("/package", packageRouter)
+app.use("/bookings",bookingRoutes);
+app.use("/contact",contactRoute);
+
+app.get("/", async (req,res) =>
+{
+    return res.send("Hello World");
+}   
+);
+
+const PORT = process.env.PORT || 5000;
+const serverConnected = async () => {
+    try {
+    await   connectToDatabase()
+     app.listen(PORT , ()=>{
+    console.log(`Server Running on PORT: http://localhost:${PORT}`)
+});
+    } catch (error) {
+       console.log(error?.message) 
+    }
+}
+
+serverConnected()
