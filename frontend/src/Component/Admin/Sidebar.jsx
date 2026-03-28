@@ -1,7 +1,20 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link , useNavigate } from 'react-router-dom'
+import api from '../../Api/Api'
+import toast from 'react-hot-toast'
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      const response = await api.get("/auth/signout", {withCredentials:true});
+      toast.success(response?.data?.message);
+      navigate("/login")
+
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error?.response)
+    }
+  }
   return (
     <div className='h-screen w-[220px] flex flex-col items-center bg-[#252525]'>
 
@@ -52,6 +65,7 @@ const Sidebar = () => {
         <li className='w-full'>
           <Link 
             to="/admin/packages"
+            onClick={handleLogout}
             className='block text-decoration-none text-2xl  text-white px-3 py-2 rounded hover:bg-sky-600 transition'
           >
             Logout

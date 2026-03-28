@@ -12,7 +12,7 @@ const Users = () => {
   const [showModal, setShowModal] = useState(false);
   const [editUser, setEditUser] = useState(null);
 
-  // 🔥 fetch users
+  //  fetch users
   const getUsers = async () => {
     try {
       const res = await api.get("/user/all-users");
@@ -40,8 +40,15 @@ const Users = () => {
       }
     }
   };
-
-  // 🔥 table columns
+  const handleRoleChange = async (rowId, role) => {
+    try {
+      const response = await api.put("/user/change-role" , {role:role , userId:rowId} , {withCredentials:true});
+      toast.success(response?.data?.message)
+    } catch (error) {
+       toast.error(error?.response?.data?.message || error.message);
+    }
+  }
+  //  table columns
   const columns = [
     {
       name: "#",
@@ -58,6 +65,22 @@ const Users = () => {
       selector: row => row.email,
       sortable: true
     },
+   {
+  name: "Role",
+  cell: row => (
+    <>
+      <select onChange={(e) => handleRoleChange(row._id, e.target.value)} defaultValue={row.role}>
+        {
+          ["Admin", "user"].map((r) => (
+            <option key={r} value={r}>
+              {r}
+            </option>
+          ))
+        }
+      </select>
+    </>
+  )
+},
     {
       name: "Action",
       cell: (row) => (

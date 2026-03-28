@@ -1,12 +1,16 @@
 import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { UserContext } from "../Context/UserContext.jsx";
+import { UserContext } from "../Context/UserContext";
 
 const ProtectedRoute = ({ children }) => {
-  const { userData } = useContext(UserContext);
+
+  const { userData, loading } = useContext(UserContext);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   if (!userData) {
-    // User logged-in না হলে login page এ redirect
     return <Navigate to="/login" replace />;
   }
 

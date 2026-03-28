@@ -2,21 +2,26 @@ import React, { createContext, useState, useEffect } from "react";
 import api from "../Api/Api";
 import toast from "react-hot-toast";
 
-// Context create
-export const UserContext = createContext(); // Context
+export const UserContext = createContext();
 
-// Provider Component
 const UserProvider = ({ children }) => {
+
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const fetchUser = async () => {
     try {
-      const response = await api.get("/user/current-user", { withCredentials: true });
-      console.log(response.data);
-      setUserData(response.data.user || response.data); // user object
+
+      const response = await api.get("/user/current-user", {
+        withCredentials: true
+      });
+
+      setUserData(response.data.user || response.data);
+
     } catch (error) {
-      toast.error(error?.response?.data?.message || error?.message);
       setUserData(null);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -24,7 +29,7 @@ const UserProvider = ({ children }) => {
     fetchUser();
   }, []);
 
-  const value = { userData, setUserData };
+  const value = { userData, setUserData, loading };
 
   return (
     <UserContext.Provider value={value}>
@@ -33,4 +38,4 @@ const UserProvider = ({ children }) => {
   );
 };
 
-export default UserProvider; // Provider component export
+export default UserProvider;

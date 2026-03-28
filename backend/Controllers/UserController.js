@@ -25,7 +25,7 @@ const ProfileCreate = async (req, res) => {
       return res.status(400).json({ message: "User ID not found" });
     }
 
-    const { address, phone } = req.body;
+    const { name, address, phone } = req.body;
 
     //  existing user
     const existingUser = await users.findById(userId);
@@ -54,6 +54,7 @@ const ProfileCreate = async (req, res) => {
     const user = await users.findByIdAndUpdate(
       userId,
       {
+        name,
         address,
         phone,
         userImg,
@@ -124,4 +125,20 @@ const DeleteProfile = async (req, res) => {
     return res.status(500).json({ message: error?.message });
   }
 };
-export {authUser , ProfileCreate , getAllUsers , DeleteProfile}
+
+const changeRole =  async (req,res) => {
+  try {
+    const {role , userId} = req.body;
+    if (!role) {
+      return res.status(400).json({message:"Role is Required"});
+    }
+    const user =  await users.findByIdAndUpdate(userId,{role:role},{new:true});
+    return res.status(200).json({message:"Role Changed Successfully" , user});
+
+
+  } catch (error) {
+    console.log(error?.message)
+  }
+}
+
+export {authUser , ProfileCreate , getAllUsers , DeleteProfile , changeRole}

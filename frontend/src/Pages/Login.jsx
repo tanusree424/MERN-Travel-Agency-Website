@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { FaEye, } from "react-icons/fa6";
 import api from '../Api/Api';
-import { useNavigate ,Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { UserContext } from '../Context/UserContext';
 const Login = () => {
     const [showPassword, setshowPassword] = useState(false);
     const [form, setform] = useState({
@@ -10,19 +11,34 @@ const Login = () => {
         password: ""
 
     });
+    const { userData, setUserData } = useContext(UserContext);
     const navigate = useNavigate()
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await api.post("/auth/signin", form);
-            console.log(response.data)
-            navigate("/");
-            toast.success(response?.data.message)
+       
+        
+  e.preventDefault();
 
-        } catch (error) {
-            console.log(error?.response?.data?.message || error?.message)
-        }
+  try {
+    const response = await api.post("/auth/signin", form);
+
+    const userRole = response?.data?.user?.role;
+    console.log(userRole);
+
+    setUserData(response?.data?.user);
+
+    toast.success(response?.data?.message);
+
+    if (userRole === "Admin") {
+      navigate("/admin");
+    } else {
+      navigate("/");
     }
+
+  } catch (error) {
+    console.log(error?.response?.data?.message || error?.message);
+  }
+};
+    
 
     return (
         <>
@@ -57,9 +73,9 @@ const Login = () => {
 
                         </div>
 
-                       
+
                         <p className='text-left text-sm text-white font-semibold'>Don't have an Account? <Link to={`/signup`} className='text-blue-800 cursor-pointer font-semibold' >SignUp</Link></p>
-                     <div className="flex justify-center items-center">
+                        <div className="flex justify-center items-center">
                             <button className='bg-gradient-to-l px-[15px] py-[8px] rounded-2xl cursor-pointer hover:bg-gray-600
                              from-black to-[#252525] text-white'>SignIn</button>
                         </div>

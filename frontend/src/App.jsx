@@ -16,7 +16,8 @@ import MyBookings from './Pages/myBookings'
 import AllPackages from './Pages/AllPackages'
 import ContactSection from './Component/ContactSection'
 import About from './Pages/About'
-
+import AdminProtectedRoute from './Component/AdminProtectedRoute'
+import Profile from './Pages/ProfilePage'
 
 function App() {
   return (
@@ -32,6 +33,9 @@ function App() {
         <Route path='/about' element={<About/>} />
         
         <Route path='/packages' element={<AllPackages/>} />
+        <Route path='profile' element={<ProtectedRoute>
+          <Profile/>
+        </ProtectedRoute>} />
         <Route path='/bookings/:id' element={
           <ProtectedRoute>
           <BookingPage/>
@@ -39,7 +43,11 @@ function App() {
           } />
 
         {/*  admin route */}
-       <Route path="/admin" element={<Dashboard />}>
+       <Route path="/admin" element={
+        <AdminProtectedRoute>
+        <Dashboard />
+        </AdminProtectedRoute>
+        }>
     <Route index element={<AdminHome />} />   {/* 👈 default */}
     <Route path="users" element={<Users />} />
     <Route path="packages" element={<Packages />} />
