@@ -108,10 +108,11 @@ const closeModal = () => {
           className={`px-2 py-1 rounded ${
             row.status === "completed"
               ? "bg-green-100 text-green-600"
-              : "bg-yellow-100 text-yellow-600"
+              :  row.status === "pending"? "bg-red-100 text-red-600" : "bg-yellow-100 text-yellow-600"
           }`}
         >
           <option value="pending">Pending</option>
+          <option value="confirmed">confirmed</option>
           <option value="completed">Completed</option>
         </select>
       ),

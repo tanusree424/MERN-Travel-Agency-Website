@@ -8,6 +8,7 @@ import userRoutes from "./Routes/userRoutes.js";
 import packageRouter from "./Routes/packageRoutes.js";
 import bookingRoutes from "./Routes/BookingsRoute.js";
 import contactRoute from "./Routes/ContactRoutes.js";
+import reviewRoutes from "./Routes/ReviewRoutes.js";
 dotenv.config()
 
 const  app = express();
@@ -25,6 +26,7 @@ app.use("/user", userRoutes);
 app.use("/package", packageRouter)
 app.use("/bookings",bookingRoutes);
 app.use("/contact",contactRoute);
+app.use("/reviews", reviewRoutes);
 
 app.get("/", async (req,res) =>
 {

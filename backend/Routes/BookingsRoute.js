@@ -1,5 +1,5 @@
 import express from "express";
-import { createBooking, deleteBooking, getAllBookings, getBookingById, getMyBookings, updateBookingStatus } from "../Controllers/BookingsController.js";
+import { createBooking, deleteBooking, getAllBookings, getBookingById, getMyBookings, getPendingReview, updateBookingStatus } from "../Controllers/BookingsController.js";
 import authMiddleware from "../Middleware/authMiddleware.js";
 const bookingRoutes =  express.Router();
 
@@ -10,4 +10,5 @@ bookingRoutes.get("/one-booking/:id", authMiddleware, getBookingById);
 bookingRoutes.delete("/remove/:id", authMiddleware, deleteBooking);
 bookingRoutes.get("/my-bookings", authMiddleware , getMyBookings);
 bookingRoutes.put("/update-status/:id", authMiddleware , updateBookingStatus);
+bookingRoutes.get("/review-pending", authMiddleware , getPendingReview);
 export default bookingRoutes;

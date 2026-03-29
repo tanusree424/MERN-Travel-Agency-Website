@@ -1,26 +1,25 @@
-import React, {useContext, useState} from 'react'
+import React, { useContext } from 'react'
 import { UserContext } from '../Context/UserContext'
-import Login from '../Pages/Login';
-import toast from 'react-hot-toast';
+import { Navigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
-const AdminProtectedRoute = ({children}) => {
-    const {userData} = useContext(UserContext);
-    const [isAdmin, setIsAdmin] = useState(false)
-    if (userData?.role === "Admin") {
-      setIsAdmin(true)   
-    }
- if (isAdmin) {
-    return <>{children}</>
- }
-  return (
-    <>
-    {toast.error("You are not Authorized to open this Page")
-    
-    }
-    <Login/>
-    </>
-      
-  )
+const AdminProtectedRoute = ({ children }) => {
+
+  const { userData } = useContext(UserContext);
+
+  // not logged in
+  if (!userData) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // not admin
+  if (userData.role !== "Admin") {
+    toast.error("You are not Authorized to open this Page");
+    return <Navigate to="/" replace />;
+  }
+
+  // admin
+  return children;
 }
 
-export default AdminProtectedRoute
+export default AdminProtectedRoute;

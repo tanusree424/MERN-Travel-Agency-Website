@@ -36,7 +36,7 @@ export const getAllBookings = async (req, res) => {
 };
 export const getMyBookings = async (req, res) => {
   try {
-    const userId = req.user._id; // middleware থেকে user id
+    const userId = req.user._id; // middleware from user id
 
     const bookings = await Bookings.find({ userId })
       .populate("packageId", "title price image ") // package info
@@ -103,5 +103,28 @@ export const deleteBooking = async (req, res) => {
     res.status(200).json({ message: "Booking deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+export const getPendingReview = async (req, res) => {
+  try {
+
+    const booking = await Bookings.findOne({
+      userId: req.user._id,
+      status: "completed",
+      reviewGiven: false
+    })
+    .populate("packageId")
+    .sort({ createdAt: -1 });
+
+    if (!booking) {
+      return res.status(200).json(null);
+    }
+
+    res.status(200).json(booking);
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server Error" });
   }
 };
