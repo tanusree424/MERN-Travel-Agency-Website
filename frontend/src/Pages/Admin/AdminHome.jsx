@@ -35,7 +35,7 @@ const AdminHome = () => {
   }, []);
 
   return (
-    <div className="w-full p-6 bg-gray-100 ">
+    <div className="w-full  bg-gray-100 ">
      
       <div className="flex flex-nowrap gap-6">
 
