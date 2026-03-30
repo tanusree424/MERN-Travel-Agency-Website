@@ -53,3 +53,17 @@ export const getAllReviews = async (req, res) => {
   return   res.status(500).json(error?.message);
   }
 };
+
+export const deleteReviews = async (req,res) => {
+  try {
+    const {id} = req.params;
+    const review = await Review.findByIdAndDelete(id);
+    if (!review) {
+      return res.status(404).json({message:"Review not found"})
+    }
+    return res.status(200).json({message:"Review Deleted"});
+    
+  } catch (error) {
+    return res.status(500).json({error:error?.message});
+  }
+}

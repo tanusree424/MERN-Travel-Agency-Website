@@ -4,8 +4,16 @@ import { Navigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 
 const AdminProtectedRoute = ({ children }) => {
+  const { userData, loading } = useContext(UserContext);
 
-  const { userData } = useContext(UserContext);
+  // wait until user check complete
+  if (loading) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <h2>Loading...</h2>
+      </div>
+    );
+  }
 
   // not logged in
   if (!userData) {
@@ -18,7 +26,6 @@ const AdminProtectedRoute = ({ children }) => {
     return <Navigate to="/" replace />;
   }
 
-  // admin
   return children;
 }
 

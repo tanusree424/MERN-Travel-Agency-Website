@@ -18,7 +18,7 @@ import ContactSection from './Component/ContactSection'
 import About from './Pages/About'
 import AdminProtectedRoute from './Component/AdminProtectedRoute'
 import Profile from './Pages/ProfilePage'
-
+import Feedback from './Pages/Admin/Feedback'
 function App() {
   return (
     <>
@@ -51,7 +51,8 @@ function App() {
     <Route index element={<AdminHome />} />   {/* 👈 default */}
     <Route path="users" element={<Users />} />
     <Route path="packages" element={<Packages />} />
-    <Route path='bookings/' element={<Bookings/>} />
+    <Route path='bookings' element={<Bookings/>} />
+    <Route path='feedback' element={<Feedback/>} />
 
   </Route>
       </Routes>
