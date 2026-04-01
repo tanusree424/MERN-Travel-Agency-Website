@@ -19,6 +19,8 @@ import About from './Pages/About'
 import AdminProtectedRoute from './Component/AdminProtectedRoute'
 import Profile from './Pages/ProfilePage'
 import Feedback from './Pages/Admin/Feedback'
+import Blogs from './Pages/Admin/Blogs'
+import BlogPage from './Component/BlogPage'
 function App() {
   return (
     <>
@@ -31,6 +33,7 @@ function App() {
         <Route path='/my-bookings' element={<MyBookings/>} />
         <Route path='/contacts' element={<ContactSection/>}/>
         <Route path='/about' element={<About/>} />
+        <Route path='/blog/:id' element={<BlogPage/>} />
         
         <Route path='/packages' element={<AllPackages/>} />
         <Route path='profile' element={<ProtectedRoute>
@@ -48,11 +51,19 @@ function App() {
         <Dashboard />
         </AdminProtectedRoute>
         }>
-    <Route index element={<AdminHome />} />   {/* 👈 default */}
-    <Route path="users" element={<Users />} />
-    <Route path="packages" element={<Packages />} />
-    <Route path='bookings' element={<Bookings/>} />
-    <Route path='feedback' element={<Feedback/>} />
+    <Route index element={<AdminProtectedRoute><AdminHome /></AdminProtectedRoute>} />   {/*  default */}
+    <Route path="users" element={<AdminProtectedRoute><Users /></AdminProtectedRoute>} />
+    <Route path="packages" element={<AdminProtectedRoute><Packages /></AdminProtectedRoute>} />
+    <Route path='bookings' element={<AdminProtectedRoute><Bookings/></AdminProtectedRoute>} />
+    <Route path='feedback' element={
+      <AdminProtectedRoute>
+      <Feedback/>
+      </AdminProtectedRoute>
+      } />
+      <Route path='blogs' element={<AdminProtectedRoute>
+        <Blogs/>
+      </AdminProtectedRoute>} />
+
 
   </Route>
       </Routes>

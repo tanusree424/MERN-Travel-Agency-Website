@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL:"https://travel-agency-website-nqre.onrender.com",
+   // baseURL:"https://travel-agency-website-nqre.onrender.com",
+   baseURL:"http://localhost:5000",
     withCredentials:true
 });
 

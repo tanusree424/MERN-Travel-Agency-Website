@@ -11,12 +11,14 @@ import BlogSection from '../Component/BlogSection'
 import Footer from '../Component/Footer'
 import api from '../Api/Api'
 import ReviewModal from '../Component/ReviewModal'
+import toast from 'react-hot-toast'
 
 
 
 const Home = () => {
   const [reviewData, setReviewData] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [blogs, setBlogs] = useState([])
    const checkReview = async () => {
       try {
 
@@ -33,9 +35,21 @@ const Home = () => {
         console.log(error);
       }
     };
+    const fetchPosts = async () => {
+      try {
+        const response = await api.get("/blogs/all-blogs", {withCredentials:true});
+        setBlogs(response?.data)
+      } catch (error) {
+        toast.error(error?.response?.data?.message|| error?.message)
+      }
+    }
+
     useEffect(() => {
      checkReview()
-    }, [])
+     fetchPosts()
+    }, []);
+
+
     
   return (
     <>
@@ -47,7 +61,7 @@ const Home = () => {
     <CallToAction/>
     <FAQSection/>
     <ContactSection/>
-    <BlogSection/>
+    <BlogSection posts={blogs}/>
     <Footer/>
     {showModal && (
         <ReviewModal

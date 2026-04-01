@@ -78,7 +78,7 @@ const Nav = () => {
               onClick={() => setOpenAccountSetting(!openAccountSetting)}
               className=" p-3 rounded-full text-white"
             >
-              { <> { userData && userData.userImg ? <img src={userData.userImg} className="rounded-full w-[70px] h-[70px] object-cover " alt="" />  
+              { <> { userData && userData.userImg ? <img src={userData.userImg} className="rounded-full shadow-xl w-[70px] h-[70px] object-cover " alt="" />  
               :
                <div className="rounded-full bg-black text-white px-[14px] py-[8px]">{userData?.name.slice(0,1)}</div>  } </>} 
             </button>

@@ -18,6 +18,7 @@ const adminMiddleware = async (req,res,next) => {
             if (user.role !=="Admin") {
                 return res.status(403).json({ message: "Access Denied. Admin Only" });
             }
+            
 
             req.user = user;
             next();  

@@ -60,6 +60,15 @@ const Sidebar = () => {
             Bookings
           </Link>
         </li>
+
+        <li className='w-full'>
+          <Link 
+            to="/admin/blogs"
+            className='block text-decoration-none text-2xl  text-white px-3 py-2 rounded hover:bg-sky-600 transition'
+          >
+            Blogs
+          </Link>
+        </li>
         
         <li className='w-full'>
           <Link 

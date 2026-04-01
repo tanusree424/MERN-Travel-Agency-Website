@@ -10,6 +10,7 @@ import bookingRoutes from "./Routes/BookingsRoute.js";
 import contactRoute from "./Routes/ContactRoutes.js";
 import reviewRoutes from "./Routes/ReviewRoutes.js";
 import DashboardRoutes from "./Routes/DashboardRoutes.js";
+import blogRoutes from "./Routes/BlogRoutes.js";
 dotenv.config()
 
 const  app = express();
@@ -29,6 +30,7 @@ app.use("/bookings",bookingRoutes);
 app.use("/contact",contactRoute);
 app.use("/reviews", reviewRoutes);
 app.use("/dashboard", DashboardRoutes);
+app.use("/blogs", blogRoutes)
 
 app.get("/", async (req,res) =>
 {

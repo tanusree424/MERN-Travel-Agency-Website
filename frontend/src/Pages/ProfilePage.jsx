@@ -69,10 +69,10 @@ const Profile = () => {
                             <img
                                 src={userData?.userImg ? userData.userImg : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}
                                 alt=""
-                                className="w-[100px] h-[100px] object-cover rounded-full mb-4"
+                                className="w-[100px] h-[100px] shadow-lg object-cover rounded-full mb-4"
                             />
 
-                            <h2 className="text-2xl font-bold">{userData?.name}</h2>
+                            <span className="text-2xl text-wrap font-bold">{userData?.name}</span>
 
                             <p className="text-gray-500">{userData?.email}</p>
                             <p className="text-gray-500">{userData?.phone}</p>
