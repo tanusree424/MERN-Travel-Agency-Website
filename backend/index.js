@@ -17,8 +17,12 @@ const  app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin:["http://localhost:5173", "https://travel-agency-frontend-phi.vercel.app"],
-    credentials:true
+  origin: [
+    "http://localhost:5173",
+    "https://travel-agency-frontend-phi.vercel.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  credentials: true
 }))
 app.use(express.urlencoded({extended:true}));
 
